@@ -1,0 +1,181 @@
+/* PMI Türkiye Chatbot — chat.html styles
+   Scoped to the chat iframe; widget.js injects its own scoped styles. */
+
+:root {
+  --pmi-purple: #5E2D8C;
+  --pmi-purple-dark: #4A2370;
+  --pmi-orange: #E87722;
+  --pmi-orange-dark: #C9651A;
+  --pmi-text: #1a1a1a;
+  --pmi-muted: #6b7280;
+  --pmi-border: #e5e7eb;
+  --pmi-bg: #ffffff;
+  --pmi-bot-bubble: #f3eef9; /* very light purple tint */
+  --pmi-radius: 14px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--pmi-bg);
+  color: var(--pmi-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 14.5px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.chat-app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background: var(--pmi-bg);
+}
+
+/* Header — PMI purple with subtle orange accent bar */
+.chat-header {
+  background: var(--pmi-purple);
+  color: #fff;
+  padding: 16px 20px;
+  flex-shrink: 0;
+  border-bottom: 3px solid var(--pmi-orange);
+}
+.chat-header h1 {
+  margin: 0 0 2px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.chat-header p {
+  margin: 0;
+  font-size: 12px;
+  opacity: 0.92;
+}
+
+/* Messages */
+.messages {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 16px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.msg {
+  display: flex;
+  width: 100%;
+}
+.msg-user { justify-content: flex-end; }
+.msg-bot  { justify-content: flex-start; }
+
+.bubble {
+  max-width: 82%;
+  padding: 10px 14px;
+  border-radius: var(--pmi-radius);
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  font-size: 14px;
+  animation: fadeIn 180ms ease-out;
+}
+
+.msg-bot .bubble {
+  background: var(--pmi-bot-bubble);
+  color: var(--pmi-text);
+  border-bottom-left-radius: 4px;
+}
+.msg-user .bubble {
+  background: var(--pmi-purple);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Suggested questions */
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 4px 0 0;
+}
+.suggestion {
+  background: #fff;
+  border: 1px solid var(--pmi-border);
+  color: var(--pmi-text);
+  padding: 7px 12px;
+  font-size: 12.5px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 150ms ease;
+}
+.suggestion:hover {
+  border-color: var(--pmi-orange);
+  color: var(--pmi-orange);
+  background: #fff7f0;
+}
+
+/* Disclaimer */
+.disclaimer {
+  font-size: 11px;
+  color: var(--pmi-muted);
+  text-align: center;
+  padding: 8px 16px;
+  border-top: 1px solid var(--pmi-border);
+  background: #fff;
+  flex-shrink: 0;
+}
+
+/* Input area */
+.input-area {
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  border-top: 1px solid var(--pmi-border);
+  background: #fff;
+  flex-shrink: 0;
+}
+.input-area input {
+  flex: 1;
+  padding: 11px 14px;
+  border: 1px solid var(--pmi-border);
+  border-radius: 999px;
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 150ms ease;
+}
+.input-area input:focus {
+  border-color: var(--pmi-purple);
+}
+.input-area button {
+  background: var(--pmi-purple);
+  color: #fff;
+  border: none;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+.input-area button:hover { background: var(--pmi-purple-dark); }
+.input-area button:active { transform: translateY(1px); }
+
+/* Scrollbar */
+.messages::-webkit-scrollbar { width: 6px; }
+.messages::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}

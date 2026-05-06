@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PMI Türkiye Asistanı</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="chat-app">
+    <!-- Header -->
+    <header class="chat-header">
+      <div class="chat-header-text">
+        <h1>PMI Türkiye Asistanı</h1>
+        <p>PMI Türkiye SSS sayfasına göre yanıt verir.</p>
+      </div>
+    </header>
+
+    <!-- Message area -->
+    <main id="messages" class="messages" aria-live="polite"></main>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer">
+      Yanıtlar PMI Türkiye SSS verisi esas alınarak oluşturulur.
+    </div>
+
+    <!-- Input -->
+    <form id="chat-form" class="input-area" autocomplete="off">
+      <input
+        id="chat-input"
+        type="text"
+        placeholder="Sorunuzu yazın..."
+        aria-label="Mesaj"
+        required
+      />
+      <button type="submit" aria-label="Gönder">Gönder</button>
+    </form>
+  </div>
+
+  <!-- FAQ data must be loaded before chat logic -->
+  <script src="faqData.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      // ---------- Constants ----------
+      var FALLBACK_ANSWER =
+        "Bu konuda SSS verisi içinde net bir yanıt bulamadım. " +
+        "Kesin bilgi için PMI Türkiye ekibiyle iletişime geçmenizi öneririm.";
+      var INITIAL_MESSAGE =
+        "Merhaba, PMI Türkiye ile ilgili SSS kapsamındaki sorularınızı yanıtlayabilirim.";
+      var MIN_SCORE = 3; // minimum confidence score
+
+      // ---------- DOM ----------
+      var messagesEl = document.getElementById("messages");
+      var inputEl = document.getElementById("chat-input");
+      var formEl = document.getElementById("chat-form");
+
+      // ---------- Turkish text normalization ----------
+      function normalize(text) {
+        if (!text) return "";
+        return text
+          .toLocaleLowerCase("tr-TR")
+          .replace(/ç/g, "c")
+          .replace(/ğ/g, "g")
+          .replace(/ı/g, "i")
+          .replace(/i̇/g, "i")
+          .replace(/ö/g, "o")
+          .replace(/ş/g, "s")
+          .replace(/ü/g, "u")
+          .replace(/[^a-z0-9\s]/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      // Common Turkish stopwords
+      var STOPWORDS = new Set([
+        "ve","veya","ile","bir","bu","sunu","su","ne","nedir","nasil",
+        "icin","de","da","mi","mu","mü","ya","ki","gibi","cok","az",
+        "ben","sen","biz","siz","onlar","ama","fakat","ise","olarak",
+        "kadar","var","yok","misin","musun","midir","nelerdir","kim",
+        "kimler","hangi","nereden","nereye","nerede","mı","mü"
+      ]);
+
+      function tokenize(text) {
+        return normalize(text)
+          .split(" ")
+          .filter(function (w) { return w.length >= 2 && !STOPWORDS.has(w); });
+      }
+
+      // ---------- Levenshtein distance (typo tolerance) ----------
+      function lev(a, b) {
+        if (a === b) return 0;
+        if (!a.length) return b.length;
+        if (!b.length) return a.length;
+        var prev = new Array(b.length + 1);
+        for (var j = 0; j <= b.length; j++) prev[j] = j;
+        for (var i = 1; i <= a.length; i++) {
+          var cur = [i];
+          for (var k = 1; k <= b.length; k++) {
+            var cost = a.charCodeAt(i - 1) === b.charCodeAt(k - 1) ? 0 : 1;
+            cur[k] = Math.min(
+              cur[k - 1] + 1,
+              prev[k] + 1,
+              prev[k - 1] + cost
+            );
+          }
+          prev = cur;
+        }
+        return prev[b.length];
+      }
+
+      // Returns true if `token` matches any word in `haystackTokens` either
+      // exactly, as a substring (length >= 5), or within typo tolerance.
+      // Conservative thresholds to avoid false matches on short tokens.
+      function fuzzyHas(token, haystackTokens) {
+        if (token.length < 2) return false;
+        for (var i = 0; i < haystackTokens.length; i++) {
+          var h = haystackTokens[i];
+          if (h === token) return true;
+          // Partial / substring match (only for reasonably long tokens)
+          if (token.length >= 5 && h.indexOf(token) !== -1) return true;
+          if (h.length >= 5 && token.length >= 5 && token.indexOf(h) !== -1) return true;
+          // Typo tolerance: 0 edits <6, 1 edit 6-8, 2 edits 9+
+          if (Math.abs(h.length - token.length) <= 2) {
+            var maxEdits = token.length >= 9 ? 2 : token.length >= 6 ? 1 : 0;
+            if (maxEdits > 0 && lev(h, token) <= maxEdits) return true;
+          }
+        }
+        return false;
+      }
+
+      // ---------- Alias expansion ----------
+      // Pre-build per-FAQ search index: tokens of (question + answer + category)
+      // plus expanded alias tokens.
+      var aliasMap = (typeof faqAliases !== "undefined") ? faqAliases : {};
+
+      function expandWithAliases(tokens) {
+        var out = tokens.slice();
+        var seen = {};
+        for (var i = 0; i < tokens.length; i++) seen[tokens[i]] = true;
+        for (var t in aliasMap) {
+          if (!Object.prototype.hasOwnProperty.call(aliasMap, t)) continue;
+          // If the FAQ contains the canonical term `t` (or vice-versa),
+          // add all of its aliases as searchable tokens.
+          var hit = seen[t];
+          if (!hit) {
+            // Substring check for compound words
+            for (var i = 0; i < tokens.length && !hit; i++) {
+              if (tokens[i].indexOf(t) !== -1 || t.indexOf(tokens[i]) !== -1) {
+                hit = true;
+              }
+            }
+          }
+          if (hit) {
+            var aliases = aliasMap[t];
+            for (var j = 0; j < aliases.length; j++) {
+              var aliasTokens = aliases[j].split(" ");
+              for (var k = 0; k < aliasTokens.length; k++) {
+                if (!seen[aliasTokens[k]]) {
+                  seen[aliasTokens[k]] = true;
+                  out.push(aliasTokens[k]);
+                }
+              }
+            }
+          }
+        }
+        return out;
+      }
+
+      // Build the index once
+      var faqIndex = faqData.map(function (item) {
+        var qNorm = normalize(item.question);
+        var aNorm = normalize(item.answer);
+        var cNorm = normalize(item.category);
+        var rawTokens = (qNorm + " " + aNorm + " " + cNorm).split(" ").filter(Boolean);
+        var tokens = expandWithAliases(rawTokens);
+        return {
+          item: item,
+          qNorm: qNorm,
+          combinedNorm: qNorm + " " + aNorm + " " + cNorm,
+          tokens: tokens,
+        };
+      });
+
+      // ---------- Scoring ----------
+      // Strategy:
+      //   1. Exact normalized question match → return immediately (score 999).
+      //   2. Otherwise, score each FAQ:
+      //        +5  if user's full normalized query appears as substring in
+      //            the FAQ question
+      //        +3  if it appears anywhere in the combined text
+      //        +2  per query token that fuzzy-matches a question token
+      //        +1  per query token that fuzzy-matches answer/category/alias
+      //   3. Return the FAQ with the best score if it crosses MIN_SCORE.
+      function findAnswer(query) {
+        var qNorm = normalize(query);
+        if (!qNorm) return null;
+
+        // Step 1: exact question match
+        for (var i = 0; i < faqIndex.length; i++) {
+          if (faqIndex[i].qNorm === qNorm) return faqIndex[i].item;
+        }
+
+        var qTokens = tokenize(query);
+        if (qTokens.length === 0) return null;
+
+        var best = null;
+        var bestScore = 0;
+
+        for (var i = 0; i < faqIndex.length; i++) {
+          var entry = faqIndex[i];
+          var score = 0;
+
+          // Substring bonuses
+          if (qNorm.length >= 4) {
+            if (entry.qNorm.indexOf(qNorm) !== -1) score += 5;
+            else if (entry.combinedNorm.indexOf(qNorm) !== -1) score += 3;
+          }
+
+          // Token-level fuzzy matching.
+          // Question tokens count more than answer/alias tokens.
+          var qTokensInQuestion = entry.qNorm.split(" ").filter(Boolean);
+          var seen = {};
+          for (var j = 0; j < qTokens.length; j++) {
+            var t = qTokens[j];
+            if (seen[t]) continue;
+            seen[t] = true;
+            if (fuzzyHas(t, qTokensInQuestion)) {
+              score += 3; // strong signal: term is in the question itself
+            } else if (fuzzyHas(t, entry.tokens)) {
+              score += 1;
+            }
+          }
+
+          if (score > bestScore) {
+            bestScore = score;
+            best = entry.item;
+          }
+        }
+
+        return bestScore >= MIN_SCORE ? best : null;
+      }
+
+      // ---------- Rendering ----------
+      function appendMessage(role, text) {
+        var wrap = document.createElement("div");
+        wrap.className = "msg msg-" + role;
+        var bubble = document.createElement("div");
+        bubble.className = "bubble";
+        bubble.textContent = text;
+        wrap.appendChild(bubble);
+        messagesEl.appendChild(wrap);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+        return wrap;
+      }
+
+      function appendSuggestions(items) {
+        if (!items || items.length === 0) return;
+        var wrap = document.createElement("div");
+        wrap.className = "suggestions";
+        items.forEach(function (q) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "suggestion";
+          btn.textContent = q;
+          btn.addEventListener("click", function () {
+            handleUserMessage(q);
+          });
+          wrap.appendChild(btn);
+        });
+        messagesEl.appendChild(wrap);
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      function pickSuggestions() {
+        // Pick up to 4 distinct, short questions from different categories.
+        var byCat = {};
+        var picks = [];
+        for (var i = 0; i < faqData.length && picks.length < 4; i++) {
+          var item = faqData[i];
+          if (byCat[item.category]) continue;
+          // Skip overly long questions — keep chips visually compact.
+          if (item.question.length > 55) continue;
+          byCat[item.category] = true;
+          picks.push(item.question);
+        }
+        return picks;
+      }
+
+      // ---------- Conversation ----------
+      function handleUserMessage(text) {
+        var trimmed = (text || "").trim();
+        if (!trimmed) return;
+        appendMessage("user", trimmed);
+        inputEl.value = "";
+
+        // Slight delay for natural feel
+        setTimeout(function () {
+          var match = findAnswer(trimmed);
+          if (match) {
+            appendMessage("bot", match.answer);
+          } else {
+            appendMessage("bot", FALLBACK_ANSWER);
+          }
+        }, 220);
+      }
+
+      // ---------- Init ----------
+      function init() {
+        appendMessage("bot", INITIAL_MESSAGE);
+        appendSuggestions(pickSuggestions());
+
+        formEl.addEventListener("submit", function (e) {
+          e.preventDefault();
+          handleUserMessage(inputEl.value);
+        });
+
+        inputEl.focus();
+      }
+
+      // Wait for FAQ data
+      if (typeof faqData === "undefined" || !Array.isArray(faqData)) {
+        appendMessage("bot", "SSS verisi yüklenemedi.");
+      } else {
+        init();
+      }
+    })();
+  </script>
+</body>
+</html>

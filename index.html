@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PMI Türkiye SSS Chatbot — Demo</title>
+  <style>
+    :root {
+      --pmi-purple: #5E2D8C;
+      --pmi-orange: #E87722;
+      --pmi-dark: #1a1a1a;
+      --pmi-muted: #6b7280;
+      --pmi-bg: #f7f7f8;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+      background: var(--pmi-bg);
+      color: var(--pmi-dark);
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 24px 120px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 12px;
+      background: rgba(94, 45, 140, 0.1);
+      color: var(--pmi-purple);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 36px;
+      line-height: 1.2;
+      margin: 0 0 16px;
+      letter-spacing: -0.02em;
+    }
+    p { color: #333; font-size: 16px; }
+    .muted { color: var(--pmi-muted); font-size: 14px; }
+    .card {
+      background: #fff;
+      border: 1px solid #eaeaea;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 32px;
+    }
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+    pre {
+      background: #1a1a1a;
+      color: #f5f5f5;
+      padding: 16px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+    .arrow {
+      position: fixed;
+      right: 120px;
+      bottom: 40px;
+      color: var(--pmi-orange);
+      font-weight: 600;
+      font-size: 14px;
+      animation: bounce 2s infinite;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <span class="badge">DEMO</span>
+    <h1>PMI Türkiye SSS Chatbot</h1>
+    <p>
+      Bu sayfa, PMI Türkiye web sitesine entegre edilecek olan kayan
+      (floating) SSS asistanının demo ortamıdır. Sağ alt köşedeki balona
+      tıklayarak chatbot'u test edebilirsiniz.
+    </p>
+
+    <div class="card">
+      <h3 style="margin-top:0">Entegrasyon</h3>
+      <p class="muted">
+        WordPress veya herhangi bir web sitesinde aşağıdaki tek satırlık
+        script'i ekleyerek widget'ı yükleyebilirsiniz:
+      </p>
+      <pre>&lt;script src="https://YOUR-CLOUDFLARE-PAGES-URL/widget.js" defer&gt;&lt;/script&gt;</pre>
+    </div>
+
+    <div class="card">
+      <h3 style="margin-top:0">Veri Kaynağı</h3>
+      <p class="muted">
+        Chatbot sadece <code>faqData.js</code> dosyasındaki bilgileri
+        kullanır. Yeni sorular eklemek veya güncellemek için bu dosyayı
+        düzenlemeniz yeterlidir.
+      </p>
+    </div>
+  </div>
+
+  <div class="arrow">Test edin →</div>
+
+  <!-- Floating chatbot widget -->
+  <script src="/widget.js" defer></script>
+</body>
+</html>
