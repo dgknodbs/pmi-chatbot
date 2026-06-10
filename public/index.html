@@ -3,118 +3,670 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PMI Türkiye SSS Chatbot — Demo</title>
-  <style>
-    :root {
-      --pmi-purple: #5E2D8C;
-      --pmi-orange: #E87722;
-      --pmi-dark: #1a1a1a;
-      --pmi-muted: #6b7280;
-      --pmi-bg: #f7f7f8;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-        "Helvetica Neue", Arial, sans-serif;
-      background: var(--pmi-bg);
-      color: var(--pmi-dark);
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 64px 24px 120px;
-    }
-    .badge {
-      display: inline-block;
-      padding: 6px 12px;
-      background: rgba(94, 45, 140, 0.1);
-      color: var(--pmi-purple);
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-      margin-bottom: 20px;
-    }
-    h1 {
-      font-size: 36px;
-      line-height: 1.2;
-      margin: 0 0 16px;
-      letter-spacing: -0.02em;
-    }
-    p { color: #333; font-size: 16px; }
-    .muted { color: var(--pmi-muted); font-size: 14px; }
-    .card {
-      background: #fff;
-      border: 1px solid #eaeaea;
-      border-radius: 12px;
-      padding: 24px;
-      margin-top: 32px;
-    }
-    code {
-      background: #f3f4f6;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 13px;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    }
-    pre {
-      background: #1a1a1a;
-      color: #f5f5f5;
-      padding: 16px;
-      border-radius: 8px;
-      overflow-x: auto;
-      font-size: 13px;
-      line-height: 1.5;
-    }
-    .arrow {
-      position: fixed;
-      right: 120px;
-      bottom: 40px;
-      color: var(--pmi-orange);
-      font-weight: 600;
-      font-size: 14px;
-      animation: bounce 2s infinite;
-    }
-    @keyframes bounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-  </style>
+  <title>PMI Türkiye Chapter</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+<!-- ============================================================
+     WEBSITE
+============================================================ -->
+<header class="site-header">
   <div class="container">
-    <span class="badge">DEMO</span>
-    <h1>PMI Türkiye SSS Chatbot</h1>
-    <p>
-      Bu sayfa, PMI Türkiye web sitesine entegre edilecek olan kayan
-      (floating) SSS asistanının demo ortamıdır. Sağ alt köşedeki balona
-      tıklayarak chatbot'u test edebilirsiniz.
-    </p>
-
-    <div class="card">
-      <h3 style="margin-top:0">Entegrasyon</h3>
-      <p class="muted">
-        WordPress veya herhangi bir web sitesinde aşağıdaki tek satırlık
-        script'i ekleyerek widget'ı yükleyebilirsiniz:
-      </p>
-      <pre>&lt;script src="https://YOUR-CLOUDFLARE-PAGES-URL/widget.js" defer&gt;&lt;/script&gt;</pre>
+    <div class="site-logo">
+      <div class="site-logo-badge">
+        <span class="slb-pm">PM</span><span class="slb-i">I</span>
+      </div>
+      <span class="site-logo-text">PMI Türkiye Chapter</span>
     </div>
-
-    <div class="card">
-      <h3 style="margin-top:0">Veri Kaynağı</h3>
-      <p class="muted">
-        Chatbot sadece <code>faqData.js</code> dosyasındaki bilgileri
-        kullanır. Yeni sorular eklemek veya güncellemek için bu dosyayı
-        düzenlemeniz yeterlidir.
-      </p>
-    </div>
+    <nav class="site-nav">
+      <a href="#">Anasayfa</a>
+      <a href="#">Hakkımızda</a>
+      <a href="#">Üyelik</a>
+      <a href="#">Etkinlikler</a>
+      <a href="#">SSS</a>
+      <a href="#" class="nav-cta">İletişim</a>
+    </nav>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
   </div>
+</header>
 
-  <div class="arrow">Test edin →</div>
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-text">
+        <div class="hero-tag">🏆 Türkiye'nin En Büyük PM Topluluğu</div>
+        <h1>Proje Yönetiminde<br><span class="hero-accent">Profesyonel Gelişim</span></h1>
+        <p>PMI Türkiye Chapter olarak, proje yönetimi alanındaki profesyonelleri bir araya getiriyor; sertifikasyon, eğitim ve networking fırsatlarıyla kariyerinizi bir üst seviyeye taşıyoruz.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Üye Ol</a>
+          <a href="#" class="btn btn-ghost">Daha Fazla Bilgi →</a>
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-emoji">🏆</div>
+          <div class="stat-num">15.000+</div>
+          <div class="stat-lbl">Üye</div>
+        </div>
+        <div class="stat-card mid">
+          <div class="stat-emoji">🎓</div>
+          <div class="stat-num">500+</div>
+          <div class="stat-lbl">Eğitim</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-emoji">📜</div>
+          <div class="stat-num">PMP</div>
+          <div class="stat-lbl">Sertifikasyon</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Floating chatbot widget -->
-  <script src="/widget.js" defer></script>
+  <!-- Features -->
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Neler Sunuyoruz?</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feat-icon">📚</div>
+          <h3>Eğitimler</h3>
+          <p>PMP, CAPM ve diğer PMI sertifikasyonları için kapsamlı eğitim programları.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">🌐</div>
+          <h3>Networking</h3>
+          <p>Proje yönetimi profesyonelleriyle bağlantı kurun ve deneyim paylaşın.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">📊</div>
+          <h3>PDU Kazanımı</h3>
+          <p>Sertifikanızı sürdürmek için etkinlik ve webinarlarla PDU kazanın.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feat-icon">📖</div>
+          <h3>Dergi</h3>
+          <p>Proje Yönetimi dergimizle sektördeki gelişmeleri takip edin.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <section class="cta-banner">
+    <div class="container">
+      <div class="cta-content">
+        <h2>PMI Türkiye Asistanıyla Tanışın!</h2>
+        <p>Sorularınızı anında yanıtlamak için PMal Asistan her an yanınızda. Sağ alt köşedeki butona tıklayın.</p>
+      </div>
+      <div class="cta-visual">
+        <div class="cta-bubble">Merhaba! Nasıl yardımcı olabilirim? 👋</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© 2024 PMI Türkiye Chapter · Tüm hakları saklıdır · <a href="#">Gizlilik Politikası</a></p>
+  </div>
+</footer>
+
+
+<!-- ============================================================
+     PMAL ASISTAN — CHAT WIDGET
+============================================================ -->
+<div id="chatWidget" class="chat-widget">
+
+  <!-- FAB -->
+  <button class="chat-fab" id="chatFab" aria-label="PMal Asistan ile konuş">
+    <div class="fab-logo">
+      <div class="fab-pm">PM</div>
+      <div class="fab-ai">AI</div>
+    </div>
+    <span class="fab-badge" id="fabBadge">1</span>
+  </button>
+
+  <!-- Chat Window -->
+  <div class="chat-win" id="chatWin" aria-hidden="true" role="dialog" aria-label="PMal Asistan">
+
+    <!-- Header -->
+    <div class="cw-head">
+      <div class="cw-head-left">
+        <div class="cw-av-wrap">
+          <div class="cw-av">
+            <div class="cw-av-pm">PM</div>
+            <div class="cw-av-ai">AI</div>
+          </div>
+          <span class="cw-online-dot"></span>
+        </div>
+        <span class="cw-title">PMal Asistan</span>
+      </div>
+      <div class="cw-head-right">
+        <button class="cw-hbtn" title="Seçenekler" aria-label="Seçenekler">
+          <svg width="4" height="16" viewBox="0 0 4 16" fill="currentColor">
+            <circle cx="2" cy="2"  r="1.8"/>
+            <circle cx="2" cy="8"  r="1.8"/>
+            <circle cx="2" cy="14" r="1.8"/>
+          </svg>
+        </button>
+        <button class="cw-hbtn" id="cwClose" title="Küçült" aria-label="Kapat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Messages -->
+    <div class="cw-msgs" id="cwMsgs" role="log" aria-live="polite" aria-label="Konuşma"></div>
+
+    <!-- Input -->
+    <div class="cw-foot">
+      <input
+        type="text"
+        class="cw-inp"
+        id="cwInp"
+        placeholder="Mesajınızı yazın..."
+        autocomplete="off"
+        maxlength="500"
+        aria-label="Mesaj yazın"
+      />
+      <button class="cw-send" id="cwSend" aria-label="Gönder">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- FAQ verisi yükleniyor -->
+<script src="faqData.js"></script>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---- Sabitler ---- */
+  var FALLBACK = 'Bu konuda net bir yanıt bulamadım. Kesin bilgi için PMI Türkiye ekibiyle iletişime geçmenizi öneririm.';
+  var WELCOME  = 'Merhaba! Size nasıl yardımcı olabilirim?';
+  var MIN_SCORE = 3;
+
+  /* ---- DOM ---- */
+  var winEl   = document.getElementById('chatWin');
+  var msgsEl  = document.getElementById('cwMsgs');
+  var inpEl   = document.getElementById('cwInp');
+  var sendEl  = document.getElementById('cwSend');
+  var fabEl   = document.getElementById('chatFab');
+  var closeEl = document.getElementById('cwClose');
+  var badgeEl = document.getElementById('fabBadge');
+
+  var isOpen = false;
+
+  function openChat() {
+    isOpen = true;
+    winEl.classList.add('open');
+    winEl.setAttribute('aria-hidden', 'false');
+    fabEl.classList.add('hidden');
+    if (badgeEl) badgeEl.style.display = 'none';
+    inpEl.focus();
+  }
+
+  function closeChat() {
+    isOpen = false;
+    winEl.classList.remove('open');
+    winEl.setAttribute('aria-hidden', 'true');
+    fabEl.classList.remove('hidden');
+  }
+
+  fabEl.addEventListener('click', openChat);
+  closeEl.addEventListener('click', closeChat);
+
+  /* ---- Türkçe Normalleştirme ---- */
+  function normalize(text) {
+    if (!text) return '';
+    return text
+      .toLocaleLowerCase('tr-TR')
+      .replace(/ç/g, 'c').replace(/ğ/g, 'g').replace(/ı/g, 'i')
+      .replace(/i̇/g, 'i').replace(/ö/g, 'o').replace(/ş/g, 's').replace(/ü/g, 'u')
+      .replace(/[^a-z0-9\s]/g, ' ').replace(/\s+/g, ' ').trim();
+  }
+
+  var STOPS = new Set([
+    've','veya','ile','bir','bu','sunu','su','ne','nedir','nasil',
+    'icin','de','da','mi','mu','ya','ki','gibi','cok','az',
+    'ben','sen','biz','siz','onlar','ama','fakat','ise','olarak',
+    'kadar','var','yok','misin','musun','midir','nelerdir','kim',
+    'kimler','hangi','nereden','nereye','nerede'
+  ]);
+
+  function tokenize(text) {
+    return normalize(text).split(' ').filter(function (w) {
+      return w.length >= 2 && !STOPS.has(w);
+    });
+  }
+
+  /* ---- Levenshtein ---- */
+  function lev(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    var prev = [];
+    for (var j = 0; j <= b.length; j++) prev[j] = j;
+    for (var i = 1; i <= a.length; i++) {
+      var cur = [i];
+      for (var k = 1; k <= b.length; k++) {
+        var cost = a.charCodeAt(i - 1) === b.charCodeAt(k - 1) ? 0 : 1;
+        cur[k] = Math.min(cur[k - 1] + 1, prev[k] + 1, prev[k - 1] + cost);
+      }
+      prev = cur;
+    }
+    return prev[b.length];
+  }
+
+  function fuzzyHas(tok, haystack) {
+    if (tok.length < 2) return false;
+    for (var i = 0; i < haystack.length; i++) {
+      var h = haystack[i];
+      if (h === tok) return true;
+      if (tok.length >= 5 && h.indexOf(tok) !== -1) return true;
+      if (h.length >= 5 && tok.length >= 5 && tok.indexOf(h) !== -1) return true;
+      if (Math.abs(h.length - tok.length) <= 2) {
+        var mx = tok.length >= 9 ? 2 : tok.length >= 6 ? 1 : 0;
+        if (mx > 0 && lev(h, tok) <= mx) return true;
+      }
+    }
+    return false;
+  }
+
+  /* ---- Alias genişletme ---- */
+  var aliasMap = (typeof faqAliases !== 'undefined') ? faqAliases : {};
+
+  function expandAliases(tokens) {
+    var out = tokens.slice(), seen = {};
+    tokens.forEach(function (t) { seen[t] = true; });
+    for (var t in aliasMap) {
+      if (!Object.prototype.hasOwnProperty.call(aliasMap, t)) continue;
+      var hit = !!seen[t];
+      if (!hit) {
+        for (var i = 0; i < tokens.length && !hit; i++) {
+          if (tokens[i].indexOf(t) !== -1 || t.indexOf(tokens[i]) !== -1) hit = true;
+        }
+      }
+      if (hit) {
+        aliasMap[t].forEach(function (alias) {
+          alias.split(' ').forEach(function (at) {
+            if (!seen[at]) { seen[at] = true; out.push(at); }
+          });
+        });
+      }
+    }
+    return out;
+  }
+
+  /* ---- Index ---- */
+  var idx = faqData.map(function (item) {
+    var q = normalize(item.question);
+    var a = normalize(item.answer);
+    var c = normalize(item.category);
+    var raw = (q + ' ' + a + ' ' + c).split(' ').filter(Boolean);
+    return { item: item, qNorm: q, combo: q + ' ' + a + ' ' + c, tokens: expandAliases(raw) };
+  });
+
+  /* ---- Skor & Arama ---- */
+  function findAnswer(query) {
+    var qn = normalize(query);
+    if (!qn) return null;
+    for (var i = 0; i < idx.length; i++) {
+      if (idx[i].qNorm === qn) return idx[i].item;
+    }
+    var qt = tokenize(query);
+    if (!qt.length) return null;
+    var best = null, bScore = 0;
+    for (var i = 0; i < idx.length; i++) {
+      var e = idx[i], score = 0;
+      if (qn.length >= 4) {
+        if (e.qNorm.indexOf(qn) !== -1) score += 5;
+        else if (e.combo.indexOf(qn) !== -1) score += 3;
+      }
+      var qInQ = e.qNorm.split(' ').filter(Boolean), seen = {};
+      qt.forEach(function (t) {
+        if (seen[t]) return; seen[t] = true;
+        if (fuzzyHas(t, qInQ)) score += 3;
+        else if (fuzzyHas(t, e.tokens)) score += 1;
+      });
+      if (score > bScore) { bScore = score; best = e.item; }
+    }
+    return bScore >= MIN_SCORE ? best : null;
+  }
+
+  /* ---- Yardımcılar ---- */
+  function escHtml(s) {
+    return String(s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  function nowTime() {
+    var d = new Date();
+    return ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+  }
+
+  function scrollDown() {
+    msgsEl.scrollTop = msgsEl.scrollHeight;
+  }
+
+  function botAvatarHtml() {
+    return '<div class="msg-av">' +
+             '<div class="cw-av-sm">' +
+               '<div class="cw-av-pm sm">PM</div>' +
+               '<div class="cw-av-ai sm">AI</div>' +
+             '</div>' +
+           '</div>';
+  }
+
+  /* ---- Mesaj Oluşturucular ---- */
+  function addBotMsg(text) {
+    var el = document.createElement('div');
+    el.className = 'msg msg-bot';
+    el.innerHTML =
+      botAvatarHtml() +
+      '<div class="msg-body">' +
+        '<div class="bbl bbl-bot">' + escHtml(text) + '</div>' +
+        '<span class="msg-ts">' + nowTime() + '</span>' +
+      '</div>';
+    msgsEl.appendChild(el);
+    scrollDown();
+    return el;
+  }
+
+  function addUserMsg(text) {
+    var el = document.createElement('div');
+    el.className = 'msg msg-usr';
+    el.innerHTML =
+      '<div class="msg-body">' +
+        '<div class="bbl bbl-usr">' + escHtml(text) + '</div>' +
+        '<div class="msg-meta">' +
+          '<span class="msg-ts">' + nowTime() + '</span>' +
+          '<span class="msg-ticks">✓✓</span>' +
+        '</div>' +
+      '</div>';
+    msgsEl.appendChild(el);
+    scrollDown();
+  }
+
+  /* ---- Geri Bildirim Kartı ---- */
+  function addFeedback() {
+    var el = document.createElement('div');
+    el.className = 'msg msg-card';
+    el.innerHTML =
+      '<div class="fb-card">' +
+        '<p class="card-q">Bu cevap size yardımcı oldu mu?</p>' +
+        '<div class="fb-btns">' +
+          '<button class="fb-btn fb-yes" data-v="yes"><span class="btn-ico">👍</span> Memnun kaldım</button>' +
+          '<button class="fb-btn fb-no"  data-v="no"><span class="btn-ico">👎</span> Memnun kalmadım</button>' +
+        '</div>' +
+        '<div class="star-row">' +
+          '<button class="star" data-s="1">☆</button>' +
+          '<button class="star" data-s="2">☆</button>' +
+          '<button class="star" data-s="3">☆</button>' +
+          '<button class="star" data-s="4">☆</button>' +
+          '<button class="star" data-s="5">☆</button>' +
+        '</div>' +
+        '<p class="fb-thanks hidden">Geri bildiriminiz bizim için çok değerli. Teşekkür ederiz! 🙏</p>' +
+      '</div>';
+    msgsEl.appendChild(el);
+    scrollDown();
+
+    /* Yıldız — seçili değeri bu karta özel değişkende tut */
+    var selectedStar = 0;
+    var stars = el.querySelectorAll('.star');
+
+    function renderStars(highlight) {
+      stars.forEach(function (s, i) {
+        s.textContent = i < highlight ? '★' : '☆';
+        s.style.color  = i < highlight ? '#FFB800' : '#d1d5db';
+      });
+    }
+
+    stars.forEach(function (star) {
+      star.addEventListener('mouseenter', function () {
+        renderStars(parseInt(star.dataset.s));
+      });
+      star.addEventListener('mouseleave', function () {
+        renderStars(selectedStar);
+      });
+      star.addEventListener('click', function () {
+        selectedStar = parseInt(star.dataset.s);
+        renderStars(selectedStar);
+        el.querySelector('.fb-thanks').classList.remove('hidden');
+        scrollDown();
+      });
+    });
+
+    /* Memnun kaldım / Memnun kalmadım */
+    el.querySelectorAll('.fb-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        el.querySelectorAll('.fb-btn').forEach(function (b) {
+          b.disabled = true;
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+
+        if (btn.dataset.v === 'yes') {
+          /* Memnun kaldım: teşekkür mesajını göster */
+          el.querySelector('.fb-thanks').classList.remove('hidden');
+          scrollDown();
+        } else {
+          /* Memnun kalmadım: feedback kartını kaldır, talep kartını ekle */
+          setTimeout(function () {
+            el.remove();
+            addTicket();
+          }, 250);
+        }
+      });
+    });
+  }
+
+  /* ---- Talep Kartı ---- */
+  function addTicket() {
+    var el = document.createElement('div');
+    el.className = 'msg msg-card';
+    el.innerHTML =
+      '<div class="tc-card">' +
+        '<p class="card-q">Talep oluşturmak ister misiniz?</p>' +
+        '<div class="tc-btns">' +
+          '<button class="tc-btn tc-yes">Evet</button>' +
+          '<button class="tc-btn tc-no">Hayır</button>' +
+        '</div>' +
+      '</div>';
+    msgsEl.appendChild(el);
+    scrollDown();
+
+    el.querySelector('.tc-yes').addEventListener('click', function () {
+      el.querySelectorAll('.tc-btn').forEach(function (b) { b.disabled = true; });
+      el.querySelector('.tc-yes').classList.add('active');
+      setTimeout(function () {
+        el.remove();
+        addMailForm();
+      }, 250);
+    });
+
+    el.querySelector('.tc-no').addEventListener('click', function () {
+      el.querySelectorAll('.tc-btn').forEach(function (b) { b.disabled = true; });
+      el.querySelector('.tc-no').classList.add('active');
+      setTimeout(function () {
+        addBotMsg('Tamam! Başka bir sorunuz olursa yardımcı olmaktan memnuniyet duyarım. 😊');
+      }, 350);
+    });
+  }
+
+  /* ---- Mail Form Kartı ---- */
+  function addMailForm() {
+    var el = document.createElement('div');
+    el.className = 'msg msg-card';
+    el.innerHTML =
+      '<div class="mail-card">' +
+        '<div class="mail-card-head">' +
+          '<span class="mail-icon">📧</span>' +
+          '<span class="mail-card-title">Destek Talebi Oluştur</span>' +
+        '</div>' +
+        '<label class="mail-textarea-lbl">Ek açıklamanız (opsiyonel):</label>' +
+        '<textarea class="mail-textarea" placeholder="Eklemek istediğiniz detayları buraya yazabilirsiniz..." rows="3"></textarea>' +
+        '<button class="mail-send-btn">Mail Oluştur &amp; Gönder</button>' +
+      '</div>';
+
+    msgsEl.appendChild(el);
+    scrollDown();
+
+    el.querySelector('.mail-send-btn').addEventListener('click', function () {
+      var notes   = el.querySelector('.mail-textarea').value.trim();
+      var now     = new Date();
+      var dateStr = now.getDate().toString().padStart(2, '0') + '.' +
+                    (now.getMonth() + 1).toString().padStart(2, '0') + '.' +
+                    now.getFullYear() + ' ' +
+                    now.getHours().toString().padStart(2, '0') + ':' +
+                    now.getMinutes().toString().padStart(2, '0');
+
+      /* Konuşma geçmişini düz metin olarak oluştur */
+      var historyText = '';
+      chatHistory.forEach(function (msg) {
+        var prefix = msg.role === 'user' ? 'Kullanıcı' : 'PMal Asistan';
+        historyText += prefix + ': ' + msg.text + '\n\n';
+      });
+
+      var subject = 'Chatbot Geri Bildirimi - Memnun Kalınmadı';
+      var body =
+        'Merhaba,\n\n' +
+        'Web sitesi chatbot görüşmem sonucunda memnun kalmadım ve destek talebi oluşturmak istiyorum.\n\n' +
+        '--- Konuşma Geçmişi ---\n\n' +
+        historyText +
+        '-----------------------\n\n' +
+        'Tarih/Saat: ' + dateStr + '\n\n' +
+        'Ek açıklamam: ' + (notes || '(Belirtilmedi)') + '\n\n' +
+        'İyi çalışmalar.';
+
+      var mailtoUrl =
+        'mailto:pmi@firmaadi.com' +
+        '?subject=' + encodeURIComponent(subject) +
+        '&body='    + encodeURIComponent(body);
+
+      window.open(mailtoUrl, '_self');
+
+      /* Butonu kilitle, onay mesajı göster */
+      var sendBtn = el.querySelector('.mail-send-btn');
+      sendBtn.disabled     = true;
+      sendBtn.textContent  = '✅ Mail hazırlandı!';
+      sendBtn.style.background = '#22C55E';
+
+      setTimeout(function () {
+        addBotMsg('Mail istemciniz açıldı. Mesajınızı gönderdikten sonra ekibimiz en kısa sürede dönüş yapacaktır. 📬');
+      }, 500);
+    });
+  }
+
+  /* ---- Öneri Chip'leri ---- */
+  function addSuggestions() {
+    var picks = [], byCat = {};
+    for (var i = 0; i < faqData.length && picks.length < 4; i++) {
+      var item = faqData[i];
+      if (byCat[item.category] || item.question.length > 55) continue;
+      byCat[item.category] = true;
+      picks.push(item.question);
+    }
+    if (!picks.length) return;
+    var wrap = document.createElement('div');
+    wrap.className = 'suggestions';
+    picks.forEach(function (q) {
+      var btn = document.createElement('button');
+      btn.className = 'sug-btn';
+      btn.textContent = q;
+      btn.addEventListener('click', function () { handleMsg(q); wrap.remove(); });
+      wrap.appendChild(btn);
+    });
+    msgsEl.appendChild(wrap);
+    scrollDown();
+  }
+
+  /* ---- Typing göstergesi ---- */
+  function showTyping() {
+    var el = document.createElement('div');
+    el.className = 'msg msg-bot typing-wrap';
+    el.id = 'typingIndicator';
+    el.innerHTML =
+      botAvatarHtml() +
+      '<div class="msg-body">' +
+        '<div class="bbl bbl-bot typing-indicator">' +
+          '<span></span><span></span><span></span>' +
+        '</div>' +
+      '</div>';
+    msgsEl.appendChild(el);
+    scrollDown();
+  }
+
+  function hideTyping() {
+    var el = document.getElementById('typingIndicator');
+    if (el) el.remove();
+  }
+
+  /* ---- Konuşma geçmişi (mail için) ---- */
+  var chatHistory = [];
+
+  /* ---- Ana akış ---- */
+  function handleMsg(text) {
+    var t = (text || '').trim();
+    if (!t) return;
+    chatHistory.push({ role: 'user', text: t });
+    addUserMsg(t);
+    inpEl.value = '';
+    inpEl.focus();
+    showTyping();
+
+    setTimeout(function () {
+      hideTyping();
+      var match = findAnswer(t);
+      var answer = match ? match.answer : FALLBACK;
+      chatHistory.push({ role: 'bot', text: answer });
+      addBotMsg(answer);
+      setTimeout(addFeedback, 450);
+    }, 700);
+  }
+
+  /* ---- Başlatma ---- */
+  function init() {
+    if (typeof faqData === 'undefined' || !Array.isArray(faqData)) {
+      addBotMsg('SSS verisi yüklenemedi.');
+      return;
+    }
+    addBotMsg(WELCOME);
+    setTimeout(addSuggestions, 250);
+
+    sendEl.addEventListener('click', function () { handleMsg(inpEl.value); });
+    inpEl.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleMsg(inpEl.value); }
+    });
+  }
+
+  init();
+
+  /* ---- Hamburger menü (mobil) ---- */
+  var hamburger = document.getElementById('navHamburger');
+  if (hamburger) {
+    hamburger.addEventListener('click', function () {
+      document.querySelector('.site-nav').classList.toggle('mobile-open');
+    });
+  }
+
+})();
+</script>
+
 </body>
 </html>
+
