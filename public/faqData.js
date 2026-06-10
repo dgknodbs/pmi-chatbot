@@ -1041,3 +1041,4 @@ const faqData = [
 if (typeof window !== "undefined") {
   window.faqData = faqData;
 }
+
